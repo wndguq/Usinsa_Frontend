@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import {BACKEND_SERVER_URL} from './../../global_variables';
+
 function BrandCategory( {data} ){
     const [brandList, setBrandList] = useState(data);
 
     console.log(data);
     const findBrandByTitle = (titleInput) =>{
         try{
-            axios.get("http://localhost/usinsa/api/v1/brand/title", {
+            axios.get(BACKEND_SERVER_URL + "api/v1/brand/title", {
                 params: {
                     title: titleInput
                 }

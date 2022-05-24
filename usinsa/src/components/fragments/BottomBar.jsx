@@ -5,7 +5,7 @@ function BottomBar () {
 
     return(
         <>
-        <div className='main-container pl-0 mt-4'>
+        <div className='main-container pl-0 mt-5'>
             <div className='addressBox'>
                 <p className="notice-item address-p mb-2"> 유신사 편집팀 </p>
                 <p className="notice-item address-p"> 전라북도 전주시 덕진구 금암동 14-12 </p>

@@ -3,6 +3,7 @@ import Sidebar from './fragments/Sidebar'
 import { useState, useLayoutEffect } from 'react'
 import axios from "axios";
 import BottomBar from './fragments/BottomBar';
+import {BACKEND_SERVER_URL, FILE_REPOSITORY_URL} from './../global_variables'
 
 function Main(){
 
@@ -11,26 +12,20 @@ function Main(){
     const [noticeList, setNoticeList] = useState();
 
     useLayoutEffect(() => {
-        axios.get("http://localhost/usinsa/api/v1/product", {
+        axios.get(BACKEND_SERVER_URL + "api/v1/product", {
             params: {
                 page: 0,
                 sort: "id"
             }
         })
         .then(res => {
-            console.log(res.data.data.content);
             setProductList(res.data.data.content);
         })
 
-        axios.get("http://localhost/usinsa/api/v1/brand")
+        axios.get(BACKEND_SERVER_URL + "api/v1/brand")
         .then(res => {
              setBrandList(res.data.data);
         })
-
-        // axios.get("http://localhost/usinsa/api/v1/notice")
-        // .then(res => {
-        //      setBrandList(res.data.data);
-        // })
     }, [])
 
     return(
@@ -44,7 +39,7 @@ function Main(){
                         return(
                             <div className='product-item py-2' key={product.id}>
                                 <Link to={'/product/' + product.id}>
-                                    <img className='product-img' src={"http://localhost:9000/usinsa/" + product.titleImage}></img>
+                                    <img className='product-img' src={FILE_REPOSITORY_URL + product.titleImage}></img>
                                 </Link>
                                 <div className='product-info-container'>
                                     <p className='product-info'> {product.brand.title}</p>
@@ -73,7 +68,7 @@ function Main(){
                         return(
                             <div className='product-item py-2' key={brand.brandId}>
                                 <Link to={'/brand/' + brand.brandId}>
-                                    <img className='brand-img' src={"http://localhost:9000/usinsa/" + brand.image}></img>
+                                    <img className='brand-img' src={FILE_REPOSITORY_URL + brand.image}></img>
                                 </Link>
                             </div>
                         )

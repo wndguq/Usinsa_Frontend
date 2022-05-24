@@ -3,6 +3,7 @@ import { useState, useEffect , useLayoutEffect } from 'react';
 import axios from "axios";
 import ProductCategory from './ProductCategory';
 import BrandCategory from './BrandCategory';
+import {BACKEND_SERVER_URL} from './../../global_variables';
 
 function Sidebar(){
     const [sideHandler, setSideHandler] = useState(true);
@@ -12,7 +13,7 @@ function Sidebar(){
     });
 
     useLayoutEffect(() => {
-        axios.get("http://localhost/usinsa/api/v1/category")
+        axios.get(BACKEND_SERVER_URL + "api/v1/category")
         .then(res => {
             setCategoryData({
                 state: 0,
@@ -25,7 +26,7 @@ function Sidebar(){
         document.getElementById("product").className = "tab-btn btn-active";
         document.getElementById("brand").className = "tab-btn";
         try{
-            axios.get("http://localhost/usinsa/api/v1/category")
+            axios.get(BACKEND_SERVER_URL + "api/v1/category")
             .then(res => {
                 setCategoryData({
                     state: 0,
@@ -41,7 +42,7 @@ function Sidebar(){
         document.getElementById("product").className = "tab-btn";
         document.getElementById("brand").className = "tab-btn btn-active";
         try{
-            axios.get("http://localhost/usinsa/api/v1/brand")
+            axios.get(BACKEND_SERVER_URL + "api/v1/brand")
             .then(res => {
                 setCategoryData({
                     state: 1,

@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from 'react-router-dom'
 function ProductCategory( {data} ){
 
-    console.log(data);
     const [state, setState] = useState(0);
 
     const toggleAction = ( index ) => {

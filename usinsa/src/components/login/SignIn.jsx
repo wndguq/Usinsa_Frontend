@@ -4,13 +4,12 @@ import axios from "axios";
 import customCookies  from '../../static/js/customCookies';
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "./../../redux/isValidLogin";
-
+import {BACKEND_SERVER_URL } from "./../../global_variables"
 function SignIn(){
 
     const dispatch = useDispatch();
 
     const { isValidLogin } = useSelector(state => state.isValidLogin);
-    console.log(isValidLogin);
 
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
@@ -41,7 +40,7 @@ function SignIn(){
             return ;
         }
 
-        axios.post("http://localhost/usinsa/api/v1/signin", {
+        axios.post(BACKEND_SERVER_URL + "api/v1/signin", {
                 "username": username,
                 "password": password
         })

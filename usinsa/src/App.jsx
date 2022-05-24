@@ -31,7 +31,7 @@ function App() {
   // 새로고침 시 isVaildLogin이 초기화 되므로 최상위 컴포넌트에서 로그인 여부 체크
   useLayoutEffect(() => {
     if(customCookies.existsJWT){
-      validLogin();
+      validLogin;
     }
   }, [])
 

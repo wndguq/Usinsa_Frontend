@@ -2,7 +2,8 @@ import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useParams, Link } from 'react-router-dom';
 import axios from "axios";
 import Sidebar from "../fragments/Sidebar";
-// import BottomBar from "../fragments/BottomBar";
+import {BACKEND_SERVER_URL, FILE_REPOSITORY_URL} from './../../global_variables'
+import BottomBar from "../fragments/BottomBar";
 
 function Product(){
 
@@ -11,15 +12,14 @@ function Product(){
     const [product, setProduct] = useState();
 
     useEffect(() => {
-        axios.get("http://localhost/usinsa/api/v1/product/" + id)
+        axios.get(BACKEND_SERVER_URL + "api/v1/product/" + id)
         .then(res => {
-            console.log(res.data.data);
             setProduct(res.data.data);
         })
     }, [id])
 
     const changeTitleImage = (src) => {
-        document.getElementById("titleImage").src = "http://localhost:9000/usinsa/" + src;
+        document.getElementById("titleImage").src = FILE_REPOSITORY_URL + src;
     }
 
     return(
@@ -49,14 +49,14 @@ function Product(){
                             <div className="display-f inner-min-width pb-3 border-b" >
                                 <div className="width-500">
                                     <div>
-                                        <img id="titleImage" className="product-title-img" src={"http://localhost:9000/usinsa/" + product.product.titleImage}></img>
+                                        <img id="titleImage" className="product-title-img" src={FILE_REPOSITORY_URL + product.product.titleImage}></img>
                                     </div>
                                     <div className="display-f flex-align-start mt-2 ml-1 pb-3 border-b">
 
-                                        <img className="product-sub-img ml-1 mt-1" src={"http://localhost:9000/usinsa/" + product.product.titleImage} onMouseEnter={() => changeTitleImage( product.product.titleImage)}></img>
+                                        <img className="product-sub-img ml-1 mt-1" src={FILE_REPOSITORY_URL + product.product.titleImage} onMouseEnter={() => changeTitleImage( product.product.titleImage)}></img>
                                         {product.subImageList.map( (subImage, index) => {
                                             return(
-                                                <img key={index} className="product-sub-img ml-1 mt-1" src={"http://localhost:9000/usinsa/" + subImage} onMouseEnter={() => changeTitleImage(subImage)}></img>
+                                                <img key={index} className="product-sub-img ml-1 mt-1" src={FILE_REPOSITORY_URL + subImage} onMouseEnter={() => changeTitleImage(subImage)}></img>
                                             )
                                         })}
                                     </div>
@@ -76,9 +76,9 @@ function Product(){
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {product.productSizeList.map(sizeInfo => {
+                                                {product.productSizeList.map( (sizeInfo, index) => {
                                                     return(
-                                                        <tr key={sizeInfo.id}>
+                                                        <tr key={index}>
                                                             <th>{sizeInfo.size}</th>
                                                             <td>{sizeInfo.size1}</td>
                                                             <td>{sizeInfo.size2}</td>
@@ -128,7 +128,7 @@ function Product(){
                                     <div className="product-title mt-2">
                                         Product Info                                    
                                     </div>
-                                    <img src={"http://localhost:9000/usinsa/" + product.image} className="inner-min-width side-menu mt-3"></img>
+                                    <img src={FILE_REPOSITORY_URL + product.image} className="inner-min-width side-menu mt-3"></img>
                                 </div>
                             </div>
 
@@ -140,6 +140,7 @@ function Product(){
                                 </div>
                                 </div>
                             </div>
+                            <BottomBar/>
                         </div>
                     </div>
                 </div>
