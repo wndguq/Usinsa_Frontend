@@ -5,12 +5,10 @@ import NotFound from "../NotFound";
 
 function Category(){
     return(
-        <div>
-            <Routes>
-                <Route path="/:id" element={<CategoryDetail/>}></Route>
-                <Route path="/*" element={<NotFound/>}></Route> 
-            </Routes> 
-        </div>
+        <Routes>
+            <Route path="/:id" element={<CategoryDetail/>}></Route>
+            <Route path="/*" element={<NotFound/>}></Route> 
+        </Routes> 
     )
 }
 

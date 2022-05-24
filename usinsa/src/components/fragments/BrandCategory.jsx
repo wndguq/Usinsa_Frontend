@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 function BrandCategory( {data} ){
     const [brandList, setBrandList] = useState(data);
 
-    const findBrandByTitle = () =>{
+    console.log(data);
+    const findBrandByTitle = (titleInput) =>{
         try{
             axios.get("http://localhost/usinsa/api/v1/brand/title", {
                 params: {
-                    title: 'ad'
+                    title: titleInput
                 }
             })
             .then(res => {                
@@ -27,8 +28,8 @@ function BrandCategory( {data} ){
                 </div>
                 {brandList.map((brand, index) => {
                     return(
-                        <div className='brand-container py-2' key={brand.id}>
-                            <Link to={'/brand/' + brand.id}>
+                        <div className='brand-container py-2' key={brand.brandId}>
+                            <Link to={'/brand/' + brand.brandId}>
                                 <div className='brand-entitle'>{brand.enTitle}</div>
                                 <div className='brand-title'>{brand.title}</div>
                             </Link>

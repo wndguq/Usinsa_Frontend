@@ -11,6 +11,7 @@ import Category from './components/category/Category'
 import NotFound from './components/NotFound'
 import UserTopbar from './components/fragments/UserTopbar'
 import Notice from './components/notice/Notice'
+import Sidebar from './components/fragments/Sidebar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import  customCookies  from './static/js/customCookies';
 
@@ -39,17 +40,20 @@ function App() {
       <BrowserRouter>
         <Topbar/>
         <UserTopbar/>
-        <Routes>
-          <Route path="/" element={<Main/>}></Route>      
-          <Route path="/login/*" element={<Login/>}></Route>                      
-          <Route path="/product/:id" element={<Product/>}></Route>              
-          <Route path="/brand/*" element={<Brand/>}></Route>      
-          <Route path="/notice/*" element={<Notice/>}></Route>              
-          <Route path="/mypage/*" element={<Mypage/>}></Route>              
-          <Route path="/cs/*" element={<Cs/>}></Route>                    
-          <Route path="/category/*" element={<Category/>}></Route>               
-          <Route path="*" element={<NotFound/>}></Route>                       
-        </Routes>
+        <div className='main-container'>
+          <Sidebar/>
+          <Routes>
+            <Route path="/" element={<Main/>}></Route>      
+            <Route path="/login/*" element={<Login/>}></Route>                      
+            <Route path="/product/:id" element={<Product/>}></Route>              
+            <Route path="/brand/*" element={<Brand/>}></Route>      
+            <Route path="/notice/*" element={<Notice/>}></Route>              
+            <Route path="/mypage/*" element={<Mypage/>}></Route>              
+            <Route path="/cs/*" element={<Cs/>}></Route>                    
+            <Route path="/category/*" element={<Category/>}></Route>               
+            <Route path="*" element={<NotFound/>}></Route>                       
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   )

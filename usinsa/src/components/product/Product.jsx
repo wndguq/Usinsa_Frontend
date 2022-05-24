@@ -23,8 +23,7 @@ function Product(){
     }
 
     return(
-        <div className='main-container'>
-            <Sidebar/>
+        <>
             {product &&
                 <div className="main-page-container">
                     <p className="main-title item-p border-b"> 유신사 스토어 {' > '} 브랜드숍 {' > '} {product.product.brand.title} </p>
@@ -37,7 +36,7 @@ function Product(){
                         <div className='main-page-container'>
                             <div className="display-f flex-align-start" >
                                 <span className="item-p text-color-gray">
-                                    {product.product.subCategory.category.title} {' > '} {product.product.subCategory.title}
+                                    {product.product.categoryTitle} {' > '} {product.product.subCategoryTitle}
                                 </span>
                             </div>
                             <div className="display-f flex-align-start" >
@@ -50,14 +49,14 @@ function Product(){
                             <div className="display-f inner-min-width pb-3 border-b" >
                                 <div className="width-500">
                                     <div>
-                                        <img id="titleImage" className="product-title-img" src={"http://localhost:9000/usinsa/" + product.product.image}></img>
+                                        <img id="titleImage" className="product-title-img" src={"http://localhost:9000/usinsa/" + product.product.titleImage}></img>
                                     </div>
                                     <div className="display-f flex-align-start mt-2 ml-1 pb-3 border-b">
 
-                                        <img className="product-sub-img ml-1 mt-1" src={"http://localhost:9000/usinsa/" + product.product.image} onMouseEnter={() => changeTitleImage( product.product.image)}></img>
-                                        {product.productImageList.map( subImage => {
+                                        <img className="product-sub-img ml-1 mt-1" src={"http://localhost:9000/usinsa/" + product.product.titleImage} onMouseEnter={() => changeTitleImage( product.product.titleImage)}></img>
+                                        {product.subImageList.map( (subImage, index) => {
                                             return(
-                                                <img key={subImage.id} className="product-sub-img ml-1 mt-1" src={"http://localhost:9000/usinsa/" + subImage.image} onMouseEnter={() => changeTitleImage(subImage.image)}></img>
+                                                <img key={index} className="product-sub-img ml-1 mt-1" src={"http://localhost:9000/usinsa/" + subImage} onMouseEnter={() => changeTitleImage(subImage)}></img>
                                             )
                                         })}
                                     </div>
@@ -129,7 +128,7 @@ function Product(){
                                     <div className="product-title mt-2">
                                         Product Info                                    
                                     </div>
-                                    <img src={"http://localhost:9000/usinsa/" + product.product.image} className="inner-min-width side-menu mt-3"></img>
+                                    <img src={"http://localhost:9000/usinsa/" + product.image} className="inner-min-width side-menu mt-3"></img>
                                 </div>
                             </div>
 
@@ -151,7 +150,7 @@ function Product(){
                     상품정보를 불러오는 중입니다.
                 </div>
             }
-        </div>
+        </>
     )
 }
 

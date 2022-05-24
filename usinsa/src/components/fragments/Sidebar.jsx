@@ -5,14 +5,19 @@ import ProductCategory from './ProductCategory';
 import BrandCategory from './BrandCategory';
 
 function Sidebar(){
-    const [state, setState] = useState(0);
     const [sideHandler, setSideHandler] = useState(true);
-    const [categoryData, setCategoryData] = useState()
+    const [category, setCategoryData] = useState({
+        state: 0,
+        categoryData: ''
+    });
 
     useLayoutEffect(() => {
         axios.get("http://localhost/usinsa/api/v1/category")
         .then(res => {
-            setCategoryData(res.data.data);
+            setCategoryData({
+                state: 0,
+                categoryData: res.data.data
+            });
         })
     }, [])
 
@@ -22,8 +27,10 @@ function Sidebar(){
         try{
             axios.get("http://localhost/usinsa/api/v1/category")
             .then(res => {
-                setCategoryData(res.data.data);
-                setState(0);
+                setCategoryData({
+                    state: 0,
+                    categoryData: res.data.data
+                });
             })
         }catch(error){
             console.log('api error.')
@@ -36,8 +43,10 @@ function Sidebar(){
         try{
             axios.get("http://localhost/usinsa/api/v1/brand")
             .then(res => {
-                setCategoryData(res.data.data);
-                setState(1);
+                setCategoryData({
+                    state: 1,
+                    categoryData: res.data.data
+                });
             })
         }catch(error){
             console.log('api error.')
@@ -69,7 +78,7 @@ function Sidebar(){
                 <li id="product" className="tab-btn btn-active" onClick={toProduct} > 품목 </li>
                 <li id="brand" className="tab-btn" onClick={toBrand}> 브랜드 </li>
             </ul>
-            {state === 0 ? <ProductCategory data={categoryData}/> : <BrandCategory data={categoryData}/>}
+            {category.state === 0 ? <ProductCategory data={category.categoryData}/> : <BrandCategory data={category.categoryData}/>}
 
         </div>
         </>
