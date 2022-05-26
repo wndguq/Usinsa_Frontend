@@ -24,14 +24,10 @@ function App() {
 
   const { isValidLogin } = useSelector(state => state.isValidLogin);
 
-  const validLogin = () => {
-    dispatch(setLogin(true));
-  }
-
   // 새로고침 시 isVaildLogin이 초기화 되므로 최상위 컴포넌트에서 로그인 여부 체크
   useLayoutEffect(() => {
-    if(customCookies.existsJWT){
-      validLogin;
+    if(customCookies.existsJWT()){
+      dispatch(setLogin(true));
     }
   }, [])
 
@@ -46,7 +42,7 @@ function App() {
             <Route path="/" element={<Main/>}></Route>      
             <Route path="/login/*" element={<Login/>}></Route>                      
             <Route path="/product/:id" element={<Product/>}></Route>              
-            <Route path="/brand/*" element={<Brand/>}></Route>      
+            <Route path="/brand/:id" element={<Brand/>}></Route>      
             <Route path="/notice/*" element={<Notice/>}></Route>              
             <Route path="/mypage/*" element={<Mypage/>}></Route>              
             <Route path="/cs/*" element={<Cs/>}></Route>                    

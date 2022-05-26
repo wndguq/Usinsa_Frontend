@@ -15,6 +15,7 @@ function UserTopbar () {
     const dispatch = useDispatch();
     const { isValidLogin } = useSelector(state => state.isValidLogin);
 
+    console.log(isValidLogin);
     useLayoutEffect(() => {
         if(isValidLogin){
             // axios.get 한번해서 이름, 레벨을 얻어온 후 재랜더링

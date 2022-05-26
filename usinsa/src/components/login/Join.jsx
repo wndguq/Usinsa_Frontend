@@ -5,6 +5,7 @@ import  customCookies  from '../../static/js/customCookies';
 
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "./../../redux/isValidLogin";
+import {BACKEND_SERVER_URL, FILE_REPOSITORY_URL} from './../../global_variables'
 
 //import errorHandler from '../../static/js/errorHandler';
 
@@ -14,8 +15,6 @@ function Join(){
     const navigate = useNavigate();
     
     const { isValidLogin } = useSelector(state => state.isValidLogin);
-
-    console.log(isValidLogin);
 
     useLayoutEffect(() => {
         if(isValidLogin){
@@ -74,7 +73,7 @@ function Join(){
         }
 
         console.log(password);
-        axios.post("http://localhost/usinsa/api/v1/signup", {
+        axios.post(BACKEND_SERVER_URL + "api/v1/signup", {
                 "username": username,
                 "password": password,
                 "email": email,

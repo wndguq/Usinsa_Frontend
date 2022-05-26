@@ -26,14 +26,14 @@ function Product(){
         <>
             {product &&
                 <div className="main-page-container">
-                    <p className="main-title item-p border-b"> 유신사 스토어 {' > '} 브랜드숍 {' > '} {product.product.brand.title} </p>
+                    <p className="main-title item-p border-b pl-5"> 유신사 스토어 {' > '} 브랜드숍 {' > '} {product.product.brand.title} </p>
                     <div className="border-l">
                         <div className="bg-black my-inner-topbar ">
                             <span className="brand-logo-text">
                                 {product.product.brand.enTitle}
                             </span>
                         </div>
-                        <div className='main-page-container'>
+                        <div className='main-page-container pl-3'>
                             <div className="display-f flex-align-start" >
                                 <span className="item-p text-color-gray">
                                     {product.product.categoryTitle} {' > '} {product.product.subCategoryTitle}
@@ -45,8 +45,9 @@ function Product(){
                                 </span>
                             </div>
 
-                            {/* 상품정보 왼쪽 */}
-                            <div className="display-f inner-min-width pb-3 border-b" >
+                            <div className="display-f pb-3 border-b" >
+
+                                {/* 상품정보 왼쪽 */}
                                 <div className="width-500">
                                     <div>
                                         <img id="titleImage" className="product-title-img" src={FILE_REPOSITORY_URL + product.product.titleImage}></img>
@@ -123,16 +124,16 @@ function Product(){
 
                             </div>
 
-                            <div className="display-f inner-min-width pb-3 border-b"> 
+                            <div className="display-f pb-3 border-b"> 
                                 <div className="inner-width side-menu">
                                     <div className="product-title mt-2">
                                         Product Info                                    
                                     </div>
-                                    <img src={FILE_REPOSITORY_URL + product.image} className="inner-min-width side-menu mt-3"></img>
+                                    <img src={FILE_REPOSITORY_URL + product.image} className="side-menu mt-3"></img>
                                 </div>
                             </div>
 
-                            <div className="display-f inner-min-width pb-3 border-b"> 
+                            <div className="display-f pb-3 border-b"> 
                                 <div className="product-title mt-4 ml-2">
                                     구매후기
                                     <div className="product-title mt-4 ml-2">

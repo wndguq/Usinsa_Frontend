@@ -15,7 +15,7 @@ function Main(){
         axios.get(BACKEND_SERVER_URL + "api/v1/product", {
             params: {
                 page: 0,
-                sort: "id"
+                sort: "id,desc"
             }
         })
         .then(res => {
@@ -29,11 +29,11 @@ function Main(){
     }, [])
 
     return(
-        <div className='main-page-container'>
+        <div className='main-page-container pl-3'>
             <div className='main-title'>
                 최근 등록 상품
             </div>
-            <div className='product-container border-b'>
+            <div className='product-container border-b mt-2'>
                 {productList &&
                     productList.map((product, index) => {
                         return(
@@ -42,7 +42,7 @@ function Main(){
                                     <img className='product-img' src={FILE_REPOSITORY_URL + product.titleImage}></img>
                                 </Link>
                                 <div className='product-info-container'>
-                                    <p className='product-info'> {product.brand.title}</p>
+                                    <p className='product-info'> {product.brandTitle}</p>
                                     <Link to={'/product/' + product.id}>
                                         <p className='product-info'> {product.title}</p>
                                     </Link>
