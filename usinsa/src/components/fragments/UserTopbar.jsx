@@ -1,24 +1,44 @@
 import React from "react";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import { Link } from 'react-router-dom'
 import customCookies from "../../static/js/customCookies";
-
+import {BACKEND_SERVER_URL} from './../../global_variables'
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "./../../redux/isValidLogin";
+import axios from "axios";
 
 function UserTopbar () {
     const [inputValue, setInputValue] = useState({
         nickname: '',
-        level: ''
+        level: 0
     })
 
     const dispatch = useDispatch();
     const { isValidLogin } = useSelector(state => state.isValidLogin);
 
-    console.log(isValidLogin);
     useLayoutEffect(() => {
         if(isValidLogin){
             // axios.get 한번해서 이름, 레벨을 얻어온 후 재랜더링
+            axios.get(BACKEND_SERVER_URL + "api/v1/users", {
+                headers: {
+                    "X-AUTH-TOKEN": customCookies.getAccessToken(),
+                    "REFRESH-TOKEN": customCookies.getRefreshToken()
+                }}).then(res => {
+                    console.log(res);
+                    setInputValue({
+                        ...inputValue,
+                        nickname: res.data.data.nickname
+
+                    })
+                })
+                .catch(error => {
+                    const result = apiErrorHandler(error.response.status, error.response.data);
+                    console.log(result);
+                    if(result =="logOut"){
+                        customCookies.logOut();
+                        dispatch(setLogin(false));                        
+                    }
+            })
         }
     }, [])
 
@@ -43,7 +63,7 @@ function UserTopbar () {
                         </Link>
                     </li>
                     <li className="user-top-item">
-                        <Link className="top-user-link" to="/mypage/recentlyViews">
+                        <Link className="top-user-link" to="/mypage/recentlyViewed">
                             최근 본 상품
                         </Link>
                     </li>
@@ -78,13 +98,13 @@ function UserTopbar () {
         )
     }else{
         return(
-            <div className="navbar navbar-expand my-topbar shadow">
+            <div className="navbar navbar-expand my-topbar shadow border-b">
 
                 <ul className="navbar-nav ml-2">
 
                     <li className="user-top-item">
                         <Link className="top-user-link" to="/mypage/">
-                            레벨, 닉네임
+                            레벨{inputValue.level}, {inputValue.nickname}
                         </Link>
                     </li>
                     
@@ -94,7 +114,7 @@ function UserTopbar () {
                         </Link>
                     </li>
                     <li className="user-top-item">
-                        <Link className="top-user-link" to="/mypage/recentlyViews">
+                        <Link className="top-user-link" to="/mypage/recentlyViewed">
                             최근 본 상품
                         </Link>
                     </li>

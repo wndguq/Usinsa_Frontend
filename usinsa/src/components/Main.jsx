@@ -52,7 +52,7 @@ function Main(){
                         )
                     }
                 )}
-                {productList === false &&
+                {productList == false &&
                     <h1>최근 등록된 상품이 없습니다.</h1>
                 }
 

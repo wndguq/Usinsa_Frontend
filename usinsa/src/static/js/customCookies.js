@@ -2,7 +2,8 @@ import cookies from 'react-cookies';
 
 function save (key, value, expireDate){
     const expires = new Date();
-    expires.setSeconds(+expireDate);
+    expires.setMilliseconds(+expireDate);
+
     cookies.save(key, value, {
         path: '/',
         expires
@@ -20,4 +21,12 @@ function logOut(){
     cookies.remove('refreshToken');
 }
 
-export default {save, existsJWT, logOut};
+function getAccessToken(){
+    return cookies.load('accessToken');
+}
+
+function getRefreshToken(){
+    return cookies.load('refreshToken');
+}
+
+export default {save, existsJWT, logOut, getAccessToken, getRefreshToken};

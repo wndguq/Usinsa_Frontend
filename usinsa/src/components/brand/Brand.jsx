@@ -30,7 +30,6 @@ function Brand(){
             }
         })
         .then(res => {
-            console.log(res.data.data);
             setBrandProduct(res.data.data);
         })
     }, [id])
@@ -126,7 +125,7 @@ function Brand(){
                                         {brandCategory &&
                                             brandCategory.map( category => {
                                                 return(
-                                                    <div key={category.id} className= {"pl-2 pr-2 pb-3 hover-cursor " +  (subCategory === category.id ? 'selected' : '')}>
+                                                    <div key={category.id} className= {"pl-2 pr-2 pb-3 hover-cursor " +  (subCategory == category.id ? 'selected' : '')}>
                                                         <p name="brand" onClick={() => handleInput(category.id)}>
                                                             {category.title} ({category.productCount})
                                                         </p>
@@ -179,7 +178,7 @@ function Brand(){
                                         </div>    
                                     </div>
                                 }
-                                {(brandProduct == undefined || brandProduct.content.length ===0) &&
+                                {(brandProduct == undefined || brandProduct.content.length ==0) &&
                                     <div className='product-container'>
                                         <h1 className="pt-4 pl-4">등록된 상품이 없습니다.</h1>
                                     </div>

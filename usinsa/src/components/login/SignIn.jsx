@@ -46,8 +46,8 @@ function SignIn(){
                 "password": password
         })
         .then(res =>{
-            customCookies.save('accessToken', res.data.data.accessToken, res.data.data.accessTokenExpireDate );
-            customCookies.save('refreshToken', res.data.data.refreshToken, res.data.data.accessTokenExpireDate );
+            customCookies.save('accessToken', res.data.data.accessToken, res.data.data.accessTokenExpireDate * 1 );
+            customCookies.save('refreshToken', res.data.data.refreshToken, res.data.data.accessTokenExpireDate * 60 * 24 );
 
             signIn();
             navigate('/');

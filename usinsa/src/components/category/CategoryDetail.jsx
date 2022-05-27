@@ -33,7 +33,6 @@ function CategoryDetail(){
             }
         })
         .then(res => {
-            console.log(res.data.data);
             setProductList(res.data.data);
         })
 
@@ -95,7 +94,7 @@ function CategoryDetail(){
             let maxPage = minPage + 4 > totalPage ? totalPage : minPage + 4;
             let result = [];
             for(let i=minPage; i < maxPage; i++){
-                result.push(<div className="border-r"><p key={i} className="paging-btn" onClick={() => paging(i)} > {i+1} </p></div>);
+                result.push(<div key={i} className="border-r"><p className="paging-btn" onClick={() => paging(i)} > {i+1} </p></div>);
             }
             return result;
         }else{
@@ -116,7 +115,7 @@ function CategoryDetail(){
                 </div>
                 <div >
                     {!isValidLogin &&
-                        <div className='brand-item-container pl-2 pt-3 pb-2' >
+                        <div className='brand-item-container pl-2 pt-2 pb-2' >
                             <p className="color-red pl-2 pr-4">
                                 ♥ 좋아요 
                             </p>
@@ -134,7 +133,7 @@ function CategoryDetail(){
                         {brandInput &&
                             brandInput.map( brand => {
                                 return(
-                                    <div key={brand.brandId} className= {"pl-2 pr-2 pb-2 hover-cursor " + (condition.brand === brand.brandId ? 'selected' : '')}>
+                                    <div key={brand.brandId} className= {"pl-2 pr-2 pb-2 hover-cursor " + (condition.brand == brand.brandId ? 'selected' : '')}>
                                         <p name="brand" onClick={() => handleInput('brand', brand.brandId)}>
                                             {brand.brandTitle} ({brand.productTotal})
                                         </p>
@@ -186,7 +185,7 @@ function CategoryDetail(){
                         </div>
                     </div>
                 }
-                {(productList == undefined || productList.content.length ===0) &&
+                {(productList == undefined || productList.content.length ==0) &&
                     <h1 className="pt-4 pl-4">등록된 상품이 없습니다.</h1>
                 }
             </div>

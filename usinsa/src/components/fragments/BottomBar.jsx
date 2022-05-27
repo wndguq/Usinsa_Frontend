@@ -5,7 +5,7 @@ function BottomBar () {
 
     return(
         <>
-        <div className='main-container pl-0 mt-4'>
+        <div className='main-container pl-3 mt-4 pb-2'>
             <div className='addressBox'>
                 <p className="notice-item address-p mb-2"> 유신사 편집팀 </p>
                 <p className="notice-item address-p"> 전라북도 전주시 덕진구 금암동 14-12 </p>
@@ -26,7 +26,7 @@ function BottomBar () {
             </div>
         </div> 
 
-        <div className='pl-0 mt-4'>
+        <div className='pl-3 mt-4 pb-4'>
             <div>
                 <p className="notice-item title-p"> 100% AUTHENTIC </p>
                 <p className="notice-item item-p"> 무신사스토어에서 판매되는 모든 브랜드 제품은 정식제조, 정식수입원을 통해 유통되는 100% 정품임을 보증합니다. </p>                

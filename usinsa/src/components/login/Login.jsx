@@ -4,7 +4,7 @@ import NotFound from "../NotFound";
 import Join from "./Join";
 import SignIn from "./SignIn";
 
-function Login( {match, path} ){
+function Login(){
 
     return(
         <div>

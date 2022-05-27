@@ -3,7 +3,7 @@ import '../../mycss.css'
 
 function Topbar(){
     return (
-        <div className="navbar navbar-expand navbar-light my-topbar bg-black static-top shadow">
+        <div className="navbar navbar-expand navbar-light my-topbar bg-black static-top">
             <h1 className="top-title">    
                 <Link to="/" className="top-title"> USINSA</Link>
             </h1>

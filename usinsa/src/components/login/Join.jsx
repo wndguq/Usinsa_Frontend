@@ -72,7 +72,6 @@ function Join(){
             return ;
         }
 
-        console.log(password);
         axios.post(BACKEND_SERVER_URL + "api/v1/signup", {
                 "username": username,
                 "password": password,

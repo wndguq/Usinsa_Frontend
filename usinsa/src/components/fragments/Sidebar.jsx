@@ -6,7 +6,7 @@ import BrandCategory from './BrandCategory';
 import {BACKEND_SERVER_URL} from './../../global_variables';
 
 function Sidebar(){
-    const [sideHandler, setSideHandler] = useState(true);
+    let sideHandler = true;
     const [category, setCategoryData] = useState({
         state: 0,
         categoryData: ''
@@ -57,15 +57,17 @@ function Sidebar(){
     const sidebarHandler = () => {
         const sidemenu = document.getElementById('left-menu');
         const side_handler = document.getElementById('side-handler');
+
+
         if(sideHandler){
             sidemenu.classList.add('display-n');
             side_handler.style.left= 0;
+            sideHandler=false;
         }else{
             sidemenu.classList.remove('display-n');
             side_handler.style.left= '270px';
+            sideHandler=true;
         }
-
-        setSideHandler(!sideHandler);
     }
 
     return(
@@ -79,7 +81,7 @@ function Sidebar(){
                 <li id="product" className="tab-btn btn-active" onClick={toProduct} > 품목 </li>
                 <li id="brand" className="tab-btn" onClick={toBrand}> 브랜드 </li>
             </ul>
-            {category.state === 0 ? <ProductCategory data={category.categoryData}/> : <BrandCategory data={category.categoryData}/>}
+            {category.state == 0 ? <ProductCategory data={category.categoryData}/> : <BrandCategory data={category.categoryData}/>}
 
         </div>
         </>
