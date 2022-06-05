@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import Sidebar from "../fragments/Sidebar";
 import {BACKEND_SERVER_URL, FILE_REPOSITORY_URL} from './../../global_variables'
 import BottomBar from "../fragments/BottomBar";
+import { useSelector } from "react-redux";
+import customCookies from "../../static/js/customCookies";
 
 function Product(){
 
     let { id } = useParams();
 
     const [product, setProduct] = useState();
+    const [cart, setCart] = useState([]);
+    const navigate = useNavigate();
+    const { isValidLogin } = useSelector(state => state.isValidLogin);
 
     useEffect(() => {
         axios.get(BACKEND_SERVER_URL + "api/v1/product/" + id)
@@ -18,8 +22,116 @@ function Product(){
         })
     }, [id])
 
+    let totalPrice = () => {
+        let result = 0;
+        cart.map( ({id, total, size}) => {
+            result += total * product.product.price;
+        });
+        return result;
+    };
+
     const changeTitleImage = (src) => {
         document.getElementById("titleImage").src = FILE_REPOSITORY_URL + src;
+    }
+
+    const selected = () => {
+        const select = document.getElementById("optionSelect");
+        const selectValue = select.options[select.selectedIndex].value;
+
+        if(select.selectedIndex == 0 || existsCart(selectValue)) return ;
+
+        let sizeTxt = "";
+        product.productSizeList.map( (sizeInfo) => {  
+            if(sizeInfo.sizeId == selectValue){
+                sizeTxt = sizeInfo.size;
+            }
+        });
+
+        let addCart = {
+            id: selectValue,
+            total: 1,
+            size: sizeTxt
+        }
+
+        setCart([...cart, addCart]);
+    }
+
+    const existsCart = (sizeId) => {
+        let exists = false;
+        cart.map( ({id, total, size}) => {
+            if(id == sizeId) exists = true;
+        });
+
+        return exists;
+    }
+
+    const plusCartTotal = (sizeId) => {
+        let newCart = [];
+        cart.map( ({id, total, size}) => {
+            if(id == sizeId) newCart.push({id: id, total: Number(total) + 1, size: size});
+            else newCart.push({id: id, total: total, size: size});
+        });
+
+        setCart(newCart);
+    }
+
+    const minusCartTotal = (sizeId) => {
+        let newCart = [];
+        cart.map( ({id, total, size}) => {
+            if(id == sizeId) newCart.push({id: id, total: Number(total) + 1, size: size});
+            else newCart.push({id: id, total: total, size: size});
+        });
+
+        setCart(newCart);
+    }
+
+    const deleteCartItem = (sizeId) => {
+        let newCart = [];
+        cart.map( ({id, total, size}) => {
+            if(id == sizeId) ;
+            else newCart.push({id: id, total: total, size: size});
+        });
+
+        setCart(newCart);
+    }
+
+    const nowBuyAction = () => {
+        navigate('/order');
+    }
+
+    const addCartItem = () => {
+        if(!isValidLogin){
+            alert("로그인이 필요한 서비스입니다.");
+            return ;
+        }
+
+        let axiosConfig = {
+            headers: {
+                "X-AUTH-TOKEN": customCookies.getAccessToken(),
+                "REFRESH-TOKEN": customCookies.getRefreshToken()
+            }
+        }      
+
+        cart.map( (cartItem) => {
+            axios.post(BACKEND_SERVER_URL + "api/v1/cart" ,{
+                "productId": id,
+                "productSizeId": cartItem.id,
+                "total": cartItem.total
+            }, axiosConfig)
+            .then(res => {
+                alert("장바구니에 담기 성공");
+            })
+            .catch(error => {
+                const result = apiErrorHandler(error.response.status, error.response.data);
+                if(result =="logOut"){
+                    customCookies.logOut();
+                    dispatch(setLogin(false));                        
+                    alert("로그인이 필요한 서비스입니다.");
+                }
+            })
+        })
+
+//        navigate('/order');
     }
 
     return(
@@ -107,9 +219,8 @@ function Product(){
 
                                     <div className="display-f flex-align-start flex-align-center mt-3">
                                         <span className="title-p"> Product Info </span>
-                                        <span className="address-p ml-1"> 상품 정보 </span>
+                                        <span className="address-p ml-1" style={{marginTop: "-4px"}}> 상품 정보 </span>
                                     </div>
-
                                     <ul className="product-info-ul pb-3 border-b">
                                         <li className="display-f flex-align-start"> <p className="product_article_tit"> 브랜드 </p><p className="ml-2"> {product.product.brand.title}</p></li>
                                         <li className="display-f flex-align-start"> <p className="product_article_tit"> 성별 </p><p className="ml-2"> {product.product.gender}</p></li>
@@ -120,6 +231,59 @@ function Product(){
                                     <div className="border-b pb-3 product-info-txt">
                                         18 ~ 29세, 남성에게 인기많은 상품
                                     </div>
+
+                                    <div className="display-f flex-align-start flex-align-center mt-3">
+                                        <span className="title-p"> Delivery Info </span>
+                                        <span className="address-p ml-1" style={{marginTop: "-4px"}}> 배송 정보 </span>
+                                    </div>
+                                    <ul className="product-info-ul pb-3 border-b">
+                                        <li className="display-f flex-align-start"> <p className="product_article_tit"> 배송 방법 </p><p className="ml-2" style={{fontSize: "15px"}}> 국내 배송/입점사 배송/CJ대한통운</p></li>
+                                        <li className="display-f flex-align-start"> <p className="product_article_tit"> 평균 배송 </p><p className="ml-2" style={{fontSize: "15px"}}> 3일</p></li>
+                                        <li className="display-f "> <p className="color-red mt-1" > 유신사 스토어는 전 상품 무료배송입니다.</p></li>
+                                    </ul>
+
+                                    <div className="mt-3 option-box-gray">
+                                        <div className="option-select-box">
+                                            <select id="optionSelect" className="option-select" onChange={selected}> 
+                                                <option value={"0"}> 옵션을 선택해주세요. </option>
+                                                {product.productSizeList.map( (sizeInfo, index) => {
+                                                    return(
+                                                        <option key={index} value={sizeInfo.sizeId} >
+                                                            {sizeInfo.size}, 남은 수량 {sizeInfo.total}
+                                                        </option>
+                                                    )
+                                                })}
+                                            </select>
+                                        </div>
+
+                                        <div id="cartList">
+                                            {cart &&
+                                                cart.map( (cartItem) => {
+                                                    return(
+                                                        <div key={cartItem.id} className="display-f-container side-button flex-align-center">
+                                                            <p className="option-size-txt"> {cartItem.size} </p> 
+                                                            <p className="product-total-btn hover-cursor" onClick={() => minusCartTotal(cartItem.id)} > - </p>
+                                                            <p className="product-total-txt"> {cartItem.total} </p>
+                                                            <p className="product-total-btn font-bold hover-cursor" onClick={() => plusCartTotal(cartItem.id)}> + </p>
+                                                            <p className="ml-4 price-txt"> {product.product.price * cartItem.total}원 </p>
+                                                            <p className="ml-3 hover-cursor" onClick={() => deleteCartItem(cartItem.id)}>x</p>
+                                                        </div> 
+                                                    )                                                   
+                                                })
+                                            }
+                                        </div>
+
+                                        <div className="total-price-box border-b" style={{height: "50px"}}>
+                                            <p className="side-menu-text ml-3">총 상품 금액</p> <p className="side-menu-text float-r mr-3"> {totalPrice()}원</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="display-f-container mt-2" style={{height: "50px"}}>
+                                        <button className="buy-now-btn" onClick={nowBuyAction}> 바로구매 </button>
+                                        <button className="cart-btn ml-3" onClick={addCartItem}> 장바구니 </button>
+                                        <button className="cart-btn ml-3" onClick={nowBuyAction}> ♡ </button>
+                                    </div>
+
                                 </div>
 
                             </div>

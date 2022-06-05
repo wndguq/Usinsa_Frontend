@@ -159,7 +159,7 @@ function CategoryDetail(){
                                     <div className='display-f flex-align-center'>
                                         <div className="border-l border-r"><p className="paging-btn" onClick={() => paging(0)} > {'<<'} </p></div>
                                         {rendering(productList.number, productList.totalPages)}
-                                        <div><p className="paging-btn" onClick={() => paging(productList.totalPages)} > {'>>'} </p></div>
+                                        <div><p className="paging-btn" onClick={() => paging(productList.totalPages - 1)} > {'>>'} </p></div>
                                     </div>
                                 }
                             </div>

@@ -81,7 +81,7 @@ function Main(){
                     공지사항
                 </div>
 
-                <ul className='notice-container'>
+                <ul className='notice-container pb-3'>
                     <Link to={"/notice/list/notice_id"}><li className='notice-item'> [필독] 주소입력 공지사항 </li></Link>
                     <Link to={"/notice/list/notice_id"}><li className='notice-item'> 환불 정책 관련 </li></Link>
                     <Link to={"/notice/list/notice_id"}><li className='notice-item'> 회원 정보 보관 관련 </li></Link>

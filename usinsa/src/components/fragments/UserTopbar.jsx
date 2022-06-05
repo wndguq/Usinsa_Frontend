@@ -28,19 +28,17 @@ function UserTopbar () {
                     setInputValue({
                         ...inputValue,
                         nickname: res.data.data.nickname
-
                     })
                 })
                 .catch(error => {
                     const result = apiErrorHandler(error.response.status, error.response.data);
-                    console.log(result);
                     if(result =="logOut"){
                         customCookies.logOut();
                         dispatch(setLogin(false));                        
                     }
             })
         }
-    }, [])
+    }, [isValidLogin])
 
     const logout = () => {
         customCookies.logOut();
@@ -104,7 +102,7 @@ function UserTopbar () {
 
                     <li className="user-top-item">
                         <Link className="top-user-link" to="/mypage/">
-                            레벨{inputValue.level}, {inputValue.nickname}
+                            LV{inputValue.level}, {inputValue.nickname}
                         </Link>
                     </li>
                     

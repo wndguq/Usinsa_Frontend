@@ -17,6 +17,7 @@ import  customCookies  from './static/js/customCookies';
 
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "./redux/isValidLogin";
+import Order from './components/order/order'
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
             <Route path="/mypage/*" element={<Mypage/>}></Route>              
             <Route path="/cs/*" element={<Cs/>}></Route>                    
             <Route path="/category/*" element={<Category/>}></Route>               
+            <Route path="/order/*" element={<Order/>}></Route>               
             <Route path="*" element={<NotFound/>}></Route>                       
           </Routes>
         </div>

@@ -14,9 +14,13 @@ function Mypage(){
 
     const { isValidLogin } = useSelector(state => state.isValidLogin);
 
+    if(!isValidLogin){
+        alert("로그인이 필요한 서비스입니다.");
+        return (<Navigate replace to="/login/login" />)
+    } 
+
     return(
         <div className="mypage-container" >
-            {!isValidLogin ? <Navigate replace to="/login/login" /> : ''}
             <UserInfoBar/>
             <div className='main-container' >
                 <MypageSideBar/>
