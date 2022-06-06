@@ -385,17 +385,15 @@
 .product-title-img{
     width: 500px;
     height: 600px;
-    border: 1px solid #b2b2b2;
 }
 
 .product-sub-img{
     width: 70px;
     height: 80px;
-    border: 1px solid #b2b2b2;
 }
 
 .product-sub-img:hover{
-    border: 1px solid #000;
+    border: 1px solid #000 !important;
     cursor: pointer;
 }
 
@@ -455,6 +453,10 @@
 
 .addressBox{
     width: 330px;
+}
+
+.border{
+    border: 1px solid #b2b2b2;
 }
 
 .border-l{
@@ -687,6 +689,10 @@
     border-bottom: 1px solid #9197a2;
 }
 
+.n-table tbody{
+    min-height: 400px;
+}
+
 .n-table thead tr th{
     padding: 15px 0;
 }
@@ -694,8 +700,8 @@
 .n-table-none{
     height: 400px;
     text-align: center;
-    border-bottom: 1px solid #b2b2b2;
     line-height: 300px;
+    width: 100%;
     min-width: 1000px;
 }
 

@@ -6,6 +6,7 @@ import {BACKEND_SERVER_URL} from './../../global_variables'
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "./../../redux/isValidLogin";
 import axios from "axios";
+import apiErrorHandler from "../../static/js/apiErrorHandler";
 
 function UserTopbar () {
     const [inputValue, setInputValue] = useState({

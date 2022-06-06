@@ -3,8 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import {BACKEND_SERVER_URL, FILE_REPOSITORY_URL} from './../../global_variables'
 import BottomBar from "../fragments/BottomBar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import customCookies from "../../static/js/customCookies";
+import apiErrorHandler from "../../static/js/apiErrorHandler";
 
 function Product(){
 
@@ -14,6 +15,7 @@ function Product(){
     const [cart, setCart] = useState([]);
     const navigate = useNavigate();
     const { isValidLogin } = useSelector(state => state.isValidLogin);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         axios.get(BACKEND_SERVER_URL + "api/v1/product/" + id)
@@ -162,14 +164,14 @@ function Product(){
                                 {/* 상품정보 왼쪽 */}
                                 <div className="width-500">
                                     <div>
-                                        <img id="titleImage" className="product-title-img" src={FILE_REPOSITORY_URL + product.product.titleImage}></img>
+                                        <img id="titleImage" className="product-title-img border" src={FILE_REPOSITORY_URL + product.product.titleImage}></img>
                                     </div>
                                     <div className="display-f flex-align-start mt-2 ml-1 pb-3 border-b">
 
-                                        <img className="product-sub-img ml-1 mt-1" src={FILE_REPOSITORY_URL + product.product.titleImage} onMouseEnter={() => changeTitleImage( product.product.titleImage)}></img>
+                                        <img className="product-sub-img border ml-1 mt-1" src={FILE_REPOSITORY_URL + product.product.titleImage} onMouseEnter={() => changeTitleImage( product.product.titleImage)}></img>
                                         {product.subImageList.map( (subImage, index) => {
                                             return(
-                                                <img key={index} className="product-sub-img ml-1 mt-1" src={FILE_REPOSITORY_URL + subImage} onMouseEnter={() => changeTitleImage(subImage)}></img>
+                                                <img key={index} className="product-sub-img border ml-1 mt-1" src={FILE_REPOSITORY_URL + subImage} onMouseEnter={() => changeTitleImage(subImage)}></img>
                                             )
                                         })}
                                     </div>

@@ -6,17 +6,15 @@ import { setLogin } from "../../redux/isValidLogin";
 import apiErrorHandler from "../../static/js/apiErrorHandler";
 import customCookies from "../../static/js/customCookies";
 import BottomBar from "../fragments/BottomBar";
-import {BACKEND_SERVER_URL} from './../../global_variables'
+import {BACKEND_SERVER_URL, FILE_REPOSITORY_URL } from './../../global_variables'
 
 function Cart(){
 
     const [cartInput, setCartInput] = useState();
     const { isValidLogin } = useSelector(state => state.isValidLogin);
 
-    console.log(isValidLogin);
     useLayoutEffect(() => {
         if(isValidLogin){
-            // axios.get 한번해서 이름, 레벨을 얻어온 후 재랜더링
             axios.get(BACKEND_SERVER_URL + "api/v1/cart", {
                 headers: {
                     "X-AUTH-TOKEN": customCookies.getAccessToken(),
@@ -38,29 +36,71 @@ function Cart(){
         }
     }, [])
 
+    const formAction = (event) =>{
+        event.preventDefault();
+        alert("상품 구매 미구현");
+    }
+
     return(
         <div className="main-page-container">
             <p className="ml-3 product-title" > 장바구니 </p>
-            <table className="n-table mt-3 ml-2">
+            <form onSubmit={formAction}>
+            <table className="n-table mt-3 ml-2 border-b">
                 <colgroup>
-                    <col style={{width: "*"}}></col>
-                    <col style={{width: "20%"}}></col>
-                    <col style={{width: "20%"}}></col>
-                    <col style={{width: "20%"}}></col>
+                    <col style={{width: "3%"}}></col>
+                    <col style={{width: "30%"}}></col>
+                    <col style={{width: "10%"}}></col>
+                    <col style={{width: "10%"}}></col>
+                    <col style={{width: "6%"}}></col>
                 </colgroup>
                 <thead>
                     <tr>
+                        <th scope="col">번호 </th>
                         <th scope="col">상품정보</th>
-                        <th scope="col">상품금액</th>
+                        <th scope="col">총 상품금액</th>
                         <th scope="col">수량</th>
-                        <th scope="col">주문금액</th>                       
+                        <th scope="col">삭제</th>                       
                     </tr>
                 </thead>
                 <tbody>
-                    {/* 장바구니 목록 불러오기 */}
+                    {cartInput &&
+                        <>
+                        {cartInput.map( (cartItem, index ) => {
+                            return(
+                                <tr key={index}>
+                                    <td> {index + 1}  </td>
+                                    <td> 
+                                        <div className="display-f flex-align-center py-2">
+                                            <input type="checkbox" name="checked" value="1"/>
+                                            <img className="product-sub-img ml-3" src={FILE_REPOSITORY_URL + cartItem.productImage}/>
+                                            <div className="ml-3">
+                                                <p className="product-info" > {cartItem.productTitle} </p>
+                                                <p className="address-p " style={{textAlign: "left"}}> 옵션: {cartItem.productSize} / 재고 {cartItem.productTotal} </p>
+                                                <p className="product-info" > * 적립금 선할인 미적용 상품(적립만 가능)</p>
+                                            </div>
+                                        </div> 
+                                    </td>
+                                    <td> {cartItem.productPrice * cartItem.total} </td>
+                                    <td> {cartItem.total} </td>
+                                    <td> <button>x</button> </td>
+                                </tr>
+                            )
+                        })}
+                        <tr>
+                            <td colSpan="4">
+                                <div className="display-f flex-center">
+                                    <input type="submit" name="submit" value=" 선택된 항목 구매하기 "></input>                                    
+                                </div>
+                            </td>
+                        </tr>
+                        </>
+                    }
+                    {(cartInput == undefined || cartInput.length ==0 ) &&
+                        <p className="n-table-none"><span> 장바구니에 담긴 상품이 없습니다.</span></p>
+                    }
                 </tbody>
-            </table>
-            <p className="n-table-none"><span> 장바구니에 담긴 상품이 없습니다.</span></p>
+            </table>    
+            </form>
             <BottomBar/>
         </div>
     )
