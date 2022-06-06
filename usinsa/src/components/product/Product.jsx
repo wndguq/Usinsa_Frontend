@@ -6,6 +6,7 @@ import BottomBar from "../fragments/BottomBar";
 import { useSelector, useDispatch } from "react-redux";
 import customCookies from "../../static/js/customCookies";
 import apiErrorHandler from "../../static/js/apiErrorHandler";
+import { setLogin } from "../../redux/isValidLogin";
 
 function Product(){
 
@@ -18,10 +19,29 @@ function Product(){
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // 상품정보
         axios.get(BACKEND_SERVER_URL + "api/v1/product/" + id)
         .then(res => {
             setProduct(res.data.data);
         })
+
+        if(isValidLogin){
+            axios.post(BACKEND_SERVER_URL + "api/v1/viewed/" + id, {}, {
+                headers: {
+                    "X-AUTH-TOKEN": customCookies.getAccessToken(),
+                    "REFRESH-TOKEN": customCookies.getRefreshToken()
+                }
+            })
+            .then(res => {})
+            .catch(error => {
+                const result = apiErrorHandler(error.response.status, error.response.data);
+                if(result =="logOut"){
+                    customCookies.logOut();
+                    dispatch(setLogin(false));
+                }
+            })
+        }
+
     }, [id])
 
     let totalPrice = () => {

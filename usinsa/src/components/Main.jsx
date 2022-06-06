@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import Sidebar from './fragments/Sidebar'
 import { useState, useLayoutEffect } from 'react'
 import axios from "axios";
 import BottomBar from './fragments/BottomBar';
