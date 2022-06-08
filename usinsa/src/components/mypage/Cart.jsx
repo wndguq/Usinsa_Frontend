@@ -87,8 +87,8 @@ function Cart(){
                             )
                         })}
                         <tr>
-                            <td colSpan="4">
-                                <div className="display-f flex-center">
+                            <td colSpan="5">
+                                <div className="display-f flex-center my-2">
                                     <input type="submit" name="submit" value=" 선택된 항목 구매하기 "></input>                                    
                                 </div>
                             </td>
@@ -96,7 +96,9 @@ function Cart(){
                         </>
                     }
                     {(cartInput == undefined || cartInput.length ==0 ) &&
-                        <p className="n-table-none"><span> 장바구니에 담긴 상품이 없습니다.</span></p>
+                        <tr>
+                            <td className="n-table-none" colSpan={"5"}><span> 장바구니에 담긴 상품이 없습니다.</span></td>
+                        </tr>
                     }
                 </tbody>
             </table>    

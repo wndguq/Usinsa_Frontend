@@ -80,12 +80,7 @@ function UserTopbar () {
                         <Link className="top-user-link" to="/mypage/deliveryTracking">
                             주문배송조회
                         </Link>
-                    </li>
-                    <li className="user-top-item">
-                        <Link className="top-user-link" to="/cs/">
-                            고객센터
-                        </Link>
-                    </li>                
+                    </li>       
                     <li className="user-top-item">
                         <Link className="top-user-link" to="/login/join">
                             회원가입 EVENT. 신규 가입 후 바로 사용 가능한 99% 할인 쿠폰
@@ -131,12 +126,7 @@ function UserTopbar () {
                         <Link className="top-user-link" to="/mypage/deliveryTracking">
                             주문배송조회
                         </Link>
-                    </li>
-                    <li className="user-top-item">
-                        <Link className="top-user-link" to="/cs/">
-                            고객센터
-                        </Link>
-                    </li>                                    
+                    </li>                                  
                     <li className="user-top-item">
                         <button className="top-user-link" onClick={logout}>
                             로그아웃

@@ -7,7 +7,7 @@ import RecentlyViewed from "./RecentlyViewed";
 import MypageSideBar from "./MypageSideBar";
 import NotFound from "../NotFound";
 import UserInfoBar from "./UserInfoBar";
-
+import Cs from "./cs/Cs";
 import { useSelector } from "react-redux";
 
 function Mypage(){
@@ -28,6 +28,7 @@ function Mypage(){
                     <Route path="/likes" element={<Likes/>}></Route>
                     <Route path="/cart" element={<Cart/>}> </Route> 
                     <Route path="/recentlyViewed" element={<RecentlyViewed/>}> </Route> 
+                    <Route path="/cs/*" element={<Cs/>}></Route>                                     
                     <Route path="/" element={<MypageMain/>}></Route>                 
                     <Route path="/*" element={<NotFound/>}></Route> 
                 </Routes>          

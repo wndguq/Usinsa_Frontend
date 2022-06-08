@@ -15,7 +15,7 @@ function MypageSideBar(){
                 <Link to={"/mypage/recentlyViewed"}>
                     <li className="mypage-menu-item hover-cursor">최근 본 상품</li> 
                 </Link>
-                <Link to={"/mypage/cs"}>
+                <Link to={"/mypage/cs/counsel"}>
                     <li className="mypage-menu-item hover-cursor"> 1:1 문의</li> 
                 </Link>
                 <Link to={"/mypage/like"}>

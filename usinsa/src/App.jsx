@@ -6,7 +6,6 @@ import Login from './components/login/Login'
 import Product from './components/product/Product'
 import Brand from './components/brand/Brand'
 import Mypage from './components/mypage/Mypage'
-import Cs from './components/cs/Cs'
 import Category from './components/category/Category'
 import NotFound from './components/NotFound'
 import UserTopbar from './components/fragments/UserTopbar'
@@ -25,6 +24,7 @@ function App() {
   const { isValidLogin } = useSelector(state => state.isValidLogin);
 
   // 새로고침 시 isVaildLogin이 초기화 되므로 최상위 컴포넌트에서 로그인 여부 체크
+  // 새로고침 시에도 값을 유지하는 redux 기술 도입 필요
   useLayoutEffect(() => {
     if(customCookies.existsJWT()){
       dispatch(setLogin(true));
@@ -46,8 +46,7 @@ function App() {
             <Route path="/product/:id" element={<Product/>}></Route>              
             <Route path="/brand/:id" element={<Brand/>}></Route>      
             <Route path="/notice/*" element={<Notice/>}></Route>              
-            <Route path="/mypage/*" element={<Mypage/>}></Route>              
-            <Route path="/cs/*" element={<Cs/>}></Route>                    
+            <Route path="/mypage/*" element={<Mypage/>}></Route>                                
             <Route path="/category/*" element={<Category/>}></Route>               
             <Route path="/order/*" element={<Order/>}></Route>               
             <Route path="*" element={<NotFound/>}></Route>                       
