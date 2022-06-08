@@ -94,7 +94,7 @@ function Join(){
     }
 
     return(
-        <div className="member-join">
+        <>
             {isValidLogin ? <Navigate replace to="/" /> : ''}
             <div className="join-form">
                 <h3 className="join-title">
@@ -171,7 +171,7 @@ function Join(){
                 </form>
                 <Link to="/"> 메인으로 돌아가기</Link>
             </div>
-        </div>
+        </>
     )
 }
 

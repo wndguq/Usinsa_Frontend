@@ -58,44 +58,43 @@ function SignIn(){
     }
 
     return(
-        <div className="member-join">
-            <div className="join-form">
-                <h3 className="join-title">
-                    로그인
-                </h3>
-                <form id="loginForm" className="join-container" onSubmit={formAction}>
-                    <div className="my-1">
-                        <div className="input-wrap">
-                            <input className="join-input-text" 
-                                type="text" maxLength={11} 
-                                placeholder="아이디"
-                                name="username" onChange={handleInput}/>
-                        </div>
+        <div className="join-form">
+            <h3 className="join-title">
+                로그인
+            </h3>
+            <form id="loginForm" className="join-container" onSubmit={formAction}>
+                <div className="my-1">
+                    <div className="input-wrap">
+                        <input className="join-input-text" 
+                            type="text" maxLength={11} 
+                            placeholder="아이디"
+                            name="username" onChange={handleInput}/>
                     </div>
+                </div>
 
-                    <div className="my-1">
-                        <div className="input-wrap">
-                            <input className="join-input-text" type="password" 
-                                placeholder="비밀번호"
-                                name="password" onChange={handleInput}/>
-                        </div>
+                <div className="my-1">
+                    <div className="input-wrap">
+                        <input className="join-input-text" type="password" 
+                            placeholder="비밀번호"
+                            name="password" onChange={handleInput}/>
                     </div>
+                </div>
 
 
-                    <input className="join-button active-signup-button mt-4"
+                <input className="join-button active-signup-button mt-4"
                         type="submit" value="로그인"></input>
 
-                    <div className="my-1" style={{height: "30px"}}>
-                        <div className="float-right">
-                        <Link to="/login/find-id" className="text-color-gray"> 아이디 찾기</Link>
-                        <span> | </span>
-                        <Link to="/login/find-pw" className="text-color-gray"> 비밀번호 찾기</Link>
-                        </div>
-                    </div>                        
-                </form>
-                <Link to="/"> 메인으로 돌아가기</Link>
-            </div>
+                <div className="my-1" style={{height: "30px"}}>
+                    <div className="float-right">
+                    <Link to="/login/find/id" className="text-color-gray"> 아이디 찾기</Link>
+                    <span> | </span>
+                    <Link to="/login/find/password" className="text-color-gray"> 비밀번호 찾기</Link>
+                    </div>
+                </div>                        
+            </form>
+            <Link to="/"> 메인으로 돌아가기</Link>
         </div>
+
     )
 }
 
