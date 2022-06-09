@@ -24,7 +24,6 @@ function Counsel(){
             }
         })
         .then(res => {
-            console.log(res.data.data.content);
             setCounselInput(res.data.data.content);
         })
         .catch(error => {
@@ -66,7 +65,7 @@ function Counsel(){
                                     <td>{counsel.qnaCategory}</td>
                                     <td>{counsel.title}</td>
                                     <td>{counsel.createdAt}</td>
-                                    <td> 처리중 </td>
+                                    <td> {counsel.existsAnswer ? "답변 완료" : "처리중"} </td>
                                 </tr>
                             )
                         })

@@ -81,8 +81,6 @@ function CounselWrite(){
     const formAction = (e) => {
         e.preventDefault();
 
-        console.log(counsel);
-
         if ( counsel.phone == "" || counsel.title == "" || counsel.body == "" || counsel.type ==0 ) {
             alert("내용이 비었거나 카테고리가 선택되지 않았습니다.");
             return;
@@ -158,9 +156,9 @@ function CounselWrite(){
                             <p className="first"> 제목</p>
                             <input type="text" className="second" name="title" onChange={handleInput}/>
                         </li>
-                        <li>
+                        <li style={{height: "120px"}}>
                             <p className="first"> 문의내용</p>
-                            <input type="text" className="second" name="body" onChange={handleInput}/>
+                            <textarea className="second" name="body" style={{height: "100px"}}  onChange={handleInput}/>
                         </li>
                     </ul>
 

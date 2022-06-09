@@ -20,7 +20,6 @@ function Cart(){
                     "X-AUTH-TOKEN": customCookies.getAccessToken(),
                     "REFRESH-TOKEN": customCookies.getRefreshToken()
                 }}).then(res => {
-                    console.log(res);
                     setCartInput(res.data.data);
                 })
                 .catch(error => {

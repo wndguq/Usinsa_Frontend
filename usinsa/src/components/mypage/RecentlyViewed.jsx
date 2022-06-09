@@ -17,7 +17,6 @@ function RecentlyViewed(){
                 "REFRESH-TOKEN": customCookies.getRefreshToken()
             }})
         .then(res => {
-            console.log(res.data.data);
             setProductList(res.data.data);
         })
 

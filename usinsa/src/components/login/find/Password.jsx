@@ -19,7 +19,6 @@ function Password(){
             alert("아이디를 입력해주세요.");
             return ;
         }
-        console.log(inputValue);
 
         axios.post(BACKEND_SERVER_URL + "api/v1/mail/reset-password", {"username": inputValue})
         .then(res =>{

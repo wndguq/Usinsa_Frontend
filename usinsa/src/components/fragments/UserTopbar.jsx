@@ -25,7 +25,6 @@ function UserTopbar () {
                     "X-AUTH-TOKEN": customCookies.getAccessToken(),
                     "REFRESH-TOKEN": customCookies.getRefreshToken()
                 }}).then(res => {
-                    console.log(res);
                     setInputValue({
                         ...inputValue,
                         nickname: res.data.data.nickname
