@@ -1,4 +1,4 @@
-import { useState, Component, useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import './App.css'
 import Main from './components/Main'
 import Topbar from './components/fragments/Topbar'
@@ -12,11 +12,12 @@ import UserTopbar from './components/fragments/UserTopbar'
 import Notice from './components/notice/Notice'
 import Sidebar from './components/fragments/Sidebar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import  customCookies  from './static/js/customCookies';
+import  customCookies  from './static/js/customCookies'
 
-import { useSelector, useDispatch } from "react-redux";
-import { setLogin } from "./redux/isValidLogin";
+import { useSelector, useDispatch } from "react-redux"
+import { setLogin } from "./redux/isValidLogin"
 import Order from './components/order/order'
+import Ranking from './components/Ranking'
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/mypage/*" element={<Mypage/>}></Route>                                
             <Route path="/category/*" element={<Category/>}></Route>               
             <Route path="/order/*" element={<Order/>}></Route>               
+            <Route path="/rank" element={<Ranking/>}></Route>               
             <Route path="*" element={<NotFound/>}></Route>                       
           </Routes>
         </div>

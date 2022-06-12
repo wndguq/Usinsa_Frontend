@@ -22,7 +22,7 @@ function Topbar(){
 
             <ul className="navbar-nav ml-auto">
                 <li className="top-item">
-                    <Link className="top-link" to="/lank/">
+                    <Link className="top-link" to="/rank">
                         랭킹
                     </Link>
                 </li>

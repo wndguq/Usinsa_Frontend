@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import {BACKEND_SERVER_URL, FILE_REPOSITORY_URL} from './../../global_variables'
 import BottomBar from "../fragments/BottomBar";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, createDispatchHook } from "react-redux";
 import customCookies from "../../static/js/customCookies";
 import apiErrorHandler from "../../static/js/apiErrorHandler";
 import { setLogin } from "../../redux/isValidLogin";
@@ -14,15 +14,34 @@ function Product(){
 
     const [product, setProduct] = useState();
     const [cart, setCart] = useState([]);
-    const navigate = useNavigate();
+    const [reviews, setReviews] = useState();
+    const [point, setPoint] = useState(0);
+
     const { isValidLogin } = useSelector(state => state.isValidLogin);
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         // 상품정보
         axios.get(BACKEND_SERVER_URL + "api/v1/product/" + id)
         .then(res => {
             setProduct(res.data.data);
+        })
+
+        axios.get(BACKEND_SERVER_URL + "api/v1/review/" + id, {
+            params: {
+                page: 0,
+                sort: "createdAt,desc"
+            }
+        })
+        .then(res => {
+            setReviews(res.data.data);
+        })
+
+        axios.get(BACKEND_SERVER_URL + "api/v1/review/point/" + id)
+        .then(res => {
+            setPoint(res.data.data);
         })
 
         if(isValidLogin){
@@ -156,12 +175,59 @@ function Product(){
 //        navigate('/order');
     }
 
+    const addReview = () => {
+        if(!isValidLogin){
+            alert("로그인이 필요한 서비스입니다.");
+            return ;
+        }
+
+        const body = document.getElementById("reviewBody");
+        if(body.value == undefined){
+            alert("내용을 입력해주세요.");
+            return ;
+        }
+
+        let axiosConfig = {
+            headers: {
+                "X-AUTH-TOKEN": customCookies.getAccessToken(),
+                "REFRESH-TOKEN": customCookies.getRefreshToken()
+            }
+        }      
+
+
+        axios.post(BACKEND_SERVER_URL + "api/v1/review" ,{
+            "productId": id,
+            "body": body.value,
+            "point": 10
+        }, axiosConfig)
+        .then(res => {
+            console.log(res);
+            if(res.data.code != undefined && res.data.code == 11010){
+                alert("이미 작성한 댓글이 있습니다.");                
+            } else {
+                alert("댓글이 달렸습니다.");
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            const result = apiErrorHandler(error.response.status, error.response.data);
+            if(result =="logOut"){
+                customCookies.logOut();
+                dispatch(setLogin(false));                        
+                alert("다시 로그인해주세요.");
+            }
+        })
+
+
+//        navigate('/order');
+    }
+
     return(
-        <>
+        <div className="main-page-container">
             {product &&
-                <div className="main-page-container">
+                <>
                     <p className="main-title item-p border-b pl-5"> 유신사 스토어 {' > '} 브랜드숍 {' > '} {product.product.brand.title} </p>
-                    <div className="border-l">
+
                         <div className="bg-black my-inner-topbar ">
                             <span className="brand-logo-text">
                                 {product.product.brand.enTitle}
@@ -319,18 +385,57 @@ function Product(){
                                 </div>
                             </div>
 
-                            <div className="display-f pb-3 border-b"> 
-                                <div className="product-title mt-4 ml-2">
-                                    구매후기
+                            {reviews &&
+                                <div className="border-b pb-5 "> 
+                                    <div className="product-info-txt font-bold mt-4 ml-2">
+                                        구매후기 (0)
+                                    </div>
+                                    <div className="ml-3 mt-2">
+                                        <div className="review-box review-top display-f flex-align-center">
+                                            <select className="ml-3">
+                                                <option value="desc"> 최신 순 </option>
+                                                <option value="asc"> 오래된 순 </option>
+                                            </select>
+                                        </div>
+
+                                        <div className="review-box display-f flex-align-center border-b">
+                                            <textarea id="reviewBody" style={{width: "900px" , height: "60px"}} className="my-3"></textarea>
+                                            <button className="ml-4 review-btn" onClick={addReview} >댓글달기</button>
+                                        </div>
+
+                                        <div className="review-box ">
+                                            {reviews.content.map( (review) => {
+                                                return(
+                                                    <div className="display-f flex-align-start pt-2 border-b pb-3" key={review.id}>
+                                                        <img className="review-user-img" src={FILE_REPOSITORY_URL + "userImage.PNG"}></img>
+                                                        <div className="pl-2" style={{width: "927px"}}>
+                                                            <p className="main-title pl-0">{review.nickname}</p>
+                                                            <p className="brand-title">신고</p>    
+                                                            <p className="brand-title mt-1">별점: {review.point}</p>    
+                                                            <div className="main-title mt-2 pl-0"> {review.body}</div>
+                                                        </div>
+                                                        <pre className="float-r" style={{width: "70px"}}>1시간전</pre>
+                                                    </div>
+                                                )
+                                            })}
+                                            {reviews.content.length == 0 &&
+                                                <div className="mt-2">
+                                                    댓글이 없습니다.
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            {reviews == undefined &&
+                                <div className="border-b"> 
                                     <div className="product-title mt-4 ml-2">
-                                    후기 없음
+                                        후기 정보 불러오는 중
+                                    </div>
                                 </div>
-                                </div>
-                            </div>
-                            <BottomBar/>
+                            }
                         </div>
-                    </div>
-                </div>
+                </>
             }
 
             {(product == undefined) &&
@@ -338,7 +443,10 @@ function Product(){
                     상품정보를 불러오는 중입니다.
                 </div>
             }
-        </>
+
+            <BottomBar/>
+
+        </div>
     )
 }
 
